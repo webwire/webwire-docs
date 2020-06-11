@@ -164,9 +164,28 @@ struct_field = identifier [ "?" ] ":" type
 ```
 Examples:
 
-- `struct Pet { name: String, age?: Integer }`
-- `struct Complex { r: Float, i: Float }`
-- `struct Person { first_name: String (length=1..50) }`
+  - ```
+    struct Pet {
+        name: String,
+        age?: Integer
+    }
+  - ```
+    struct Complex {
+        r: Float,
+        i: Float
+    }
+    ```
+  - ```
+    struct Person {
+        first_name: String (length=1..50)
+    }`
+  - ```
+    struct PaginatedResponse<T> {
+        results: T,
+        page: Integer(range=0..),
+        count: Integer(range=0..),
+    }
+    ```
 
 ## Fieldset
 
@@ -212,13 +231,6 @@ Examples:
         UserJoined(User),
         UserLeft(User),
         Message(ChatMessage),
-    }
-    ```
-  - ```
-    enum PaginatedResponse<T> {
-        results: T,
-        page: Integer(range=0..),
-        count: Integer(range=0..),
     }
     ```
 

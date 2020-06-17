@@ -151,17 +151,30 @@ Builtin types are:
 - `DateTime`
 - `UUID`
 - `Nullable<T>`
-- `Partial<T>`
+
+`Nullable` is a special type which wraps another type internally. This
+is typically used in APIs to clear values. This must not be confused
+with [optional fields](#Optional_Fields) of structures.
+
+## Generics
+
+Structures, Enumerations and some builtin types support generics.
+
+```
+generics = "<" identifier { "," identifier } ">"
+```
 
 ## Struct
 
-TODO
+Structures are a collection of fields of storing complex data
+structures.
 
 ```
-struct = "struct" identifier "{" [ struct_fields ] "}"
+struct = "struct" identifier [ generics ] "{" [ struct_fields ] "}"
 struct_fields = struct_field "," struct_field
 struct_field = identifier [ "?" ] ":" type
 ```
+
 Examples:
 
   - ```
@@ -187,13 +200,28 @@ Examples:
     }
     ```
 
+### Optional fields
+
+By appending a `?` to the field identifier a field is marked as
+optional. An optional field is very different from a nullable field.
+Optional means that the field can be absent from the structure while
+`Nullable` means that a `Null` value can be assigned.
+
+Some programming languages support this quite naturaly. JavaScript
+for example differenciates between `undefined` and `null` for object
+attributes. For languages that don't support this out of the box
+optional fields should be put inside a special wrapper.
+
 ## Fieldset
 
-TODO
+Fieldset is a special kind of structure that does not define
+its own fields but uses an existing structure and creates a subset
+of it. This feature is mainly for keeping the repetition for
+typical CRUD APIs as little as possible.
 
 ```
-fieldset = "fieldset" identifier "for" identifier "{" [ struct_fields ] "}"
-fieldset_fields = struct_field "," struct_field
+fieldset = "fieldset" identifier "for" identifier "{" struct_fields "}"
+fieldset_fields = [ fieldset_field { "," fieldset_field } [ "," ] ]
 fieldset_field = identifier [ "?" ]
 ```
 
@@ -207,12 +235,20 @@ Examples:
     }
     ```
 
-## Enum
+## Enumerations
 
-TODO
+Enumerations in `webwire` fulfill two things. They can either be
+used as plain enumerations like in most programming languages. An
+optional type argument makes it possible to describe tagged unions.
+
+This is especially handly for returning errors which might contain
+data which depends on the actual error code.
+
+Enumerations can also extend existing enumerations.
 
 ```
-enum = "enum" identifier [ generics ] "{" enum_variants "}"
+enum = "enum" identifier [ generics ] [ enum_extends ] "{" enum_variants "}"
+enum_extends = "extends" identifier [ generics ]
 enum_variants = [ enum_variant { "," enum_variant } [ "," ] ]
 enum_variant = identifier [ "(" type ")" ]
 ```
@@ -227,6 +263,17 @@ Examples:
     }
     ```
   - ```
+    enum AuthError {
+        Unauthenticated,
+        PermissionDenied
+    }
+    ```
+  - ```
+    enum GetError extends AuthError {
+        DoesNotExist
+    }
+    ```
+  - ```
     enum Notification {
         UserJoined(User),
         UserLeft(User),
@@ -236,12 +283,20 @@ Examples:
 
 ## Namespace
 
-`TODO`
+TODO
+
+```
+namespace = "namespace" identifier "{" namespace_parts "}"
+namespace_parts = { namespace_part }
+namespace_part = struct | fieldset | enum | namespace | service
+```
 
 ## Service
 
-`TODO`
+TODO
 
-## Method
-
-`TODO`
+```
+service = ["async" | "sync"] "service" identifier "{" methods "}"
+methods = [ method { "," method } [ "," ] ]
+method = identifier ":" ( type | "None" ) [ "->" type ]
+```

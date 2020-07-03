@@ -2,14 +2,22 @@
 
 ![webwire logo](docs/logo.svg)
 
+[![Discord Chat](https://img.shields.io/discord/726922033039933472?label=Discord+Chat&color=%23677bc4&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/jjD6aWG)
+
 Webwire is a **contract-first API** system which features an
 [interface description language](docs/interface_description_language.md),
 a network [protocol](docs/protocol.md) and
 [code generator](docs/code_generator.md) for both servers and clients.
 
+## Resources
+
+- **Website:** https://webwire.dev/
+- **GitHub:** https://github.com/webwire/
+- **Discord:** https://discord.gg/jjD6aWG
+
 ## WORK IN PROGRESS
 
-**Webwire is not ready to use! All the documentation and code in this
+> **Webwire is not ready to use! All the documentation and code in this
 repository is either incomplete or non functional. Don't expect anything
 to work, yet. Right now this repository is just a collection of ideas and
 preliminary implementations.**

@@ -4,7 +4,7 @@
 
 Webwire is a **contract-first API** system which features an
 [interface description language](docs/interface_description_language.md),
-a network [protocol](doc/protocol.md) and
+a network [protocol](docs/protocol.md) and
 [code generator](docs/code_generator.md) for both servers and clients.
 
 ## WORK IN PROGRESS
@@ -89,7 +89,7 @@ assert(response.message === 'Hello World!')
 - The [webwire interface description language](docs/interface_description_language.md)
   describes service endpoints and how they are called.
 
-- The [webwire protocol](doc/protocol.md) is the actual representation
+- The [webwire protocol](docs/protocol.md) is the actual representation
   how data is transferred between client and server.
 
 - The [webwire code generator](docs/code_generator.md) uses the schema

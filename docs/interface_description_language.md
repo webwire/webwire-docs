@@ -151,10 +151,16 @@ Builtin types are:
 - `DateTime`
 - `UUID`
 - `Nullable<T>`
+- `None`
 
 `Nullable` is a special type which wraps another type internally. This
 is typically used in APIs to clear values. This must not be confused
 with [optional fields](#Optional_Fields) of structures.
+
+`None` is a special type that does only have one valid value which
+is `None`. This is useful for methods that don't have input or output
+types and when working with optional generics. `None` should not be
+used on its own for field types as it has no meaning there.
 
 ## Generics
 

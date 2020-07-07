@@ -298,5 +298,5 @@ TODO
 ```
 service = ["async" | "sync"] "service" identifier "{" methods "}"
 methods = [ method { "," method } [ "," ] ]
-method = identifier ":" ( type | "None" ) [ "->" type ]
+method = identifier ":" ( type | "None" ) "->" ( type | "None" )
 ```

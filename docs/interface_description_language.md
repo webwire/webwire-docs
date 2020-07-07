@@ -150,17 +150,26 @@ Builtin types are:
 - `Time`
 - `DateTime`
 - `UUID`
-- `Nullable<T>`
 - `None`
-
-`Nullable` is a special type which wraps another type internally. This
-is typically used in APIs to clear values. This must not be confused
-with [optional fields](#Optional_Fields) of structures.
+- `Nullable<T>`
+- `Result<T, E>`
 
 `None` is a special type that does only have one valid value which
 is `None`. This is useful for methods that don't have input or output
 types and when working with optional generics. `None` should not be
 used on its own for field types as it has no meaning there.
+
+`Nullable` is a special type which wraps another type internally.
+It is similar to `enum Nullable<T> { Some(T), Null }` except that it
+maps to `null` or a similar values in programming languages that
+support this concept. It is typically used in APIs to clear values.
+This must not be confused with
+[optional fields](#Optional_fields_and_nullable_types) of structures.
+
+`Result` is a special type which is an enum that can either be `Ok(T)`
+or `Err(E)`. It is similar to `enum Result<T, E> { Ok(T), Err(E) }`
+except that it maps directly to the builtin `Result` type if supported
+by the target programming language.
 
 ## Generics
 
@@ -206,17 +215,42 @@ Examples:
     }
     ```
 
-### Optional fields
+### Optional fields and nullable types
 
 By appending a `?` to the field identifier a field is marked as
-optional. An optional field is very different from a nullable field.
-Optional means that the field can be absent from the structure while
-`Nullable` means that a `Null` value can be assigned.
+optional. Optional means that the field can be absent from the structure.
 
-Some programming languages support this quite naturaly. JavaScript
-for example differenciates between `undefined` and `null` for object
-attributes. For languages that don't support this out of the box
-optional fields should be put inside a special wrapper.
+There also exists the special `Nullable<T>` type which is used for
+something completely different. While optional means that the field
+can be missing from the serialized structure `Nullable<T>` means that
+instead of `T` a special `Null` value can be transferred instead.
+It is perfectly valid to use  optional and nullable at the same time:
+
+```
+struct UpdateProfile {
+    name?: String,
+    age?: Nullable<Integer>,
+}
+```
+
+Both `name` and `age` are optional in this example. Since Strings do
+have a special empty value (the empty string: "") it does not need
+to be `Nullable`. Integers on the other hand do not have such thing
+so `Nullable<Integer>` would make it possilbe to clear the age of a
+user profile. A JSON serialized structure containing an empty string
+for the `name` and `Null` for the `age` would look like this:
+
+```json
+{
+    "name": "",
+    "age": null,
+}
+```
+
+Some programming languages and serialization formats support this quite
+naturaly. JavaScript and JSON differenciate between `undefined` and `null`
+for object attributes. For languages that don't support this out of the
+box optional fields and nullable types are put in a special wrapper.
 
 ## Fieldset
 

@@ -7,7 +7,9 @@
 
 - [Specification]()
     - [Interface Description Language](./idl.md)
-    - [Protocol](./protocol.md)
+    - [Transport Protocol](./protocol/index.md)
+        - [Websocket](./protocol/websocket.md)
+        - [HTTP](./protocol/http.md)
 
 - [Language support]()
     - [Rust]()

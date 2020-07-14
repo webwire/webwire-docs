@@ -1,0 +1,503 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Interface Description Language - Webwire</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="idl.html" class="active"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol.html"><strong aria-hidden="true">5.2.</strong> Protocol</a></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Webwire</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#interface-description-language" id="interface-description-language">Interface Description Language</a></h1>
+<p>The interface description language of webwire is inspired by the
+<a href="https://www.rust-lang.org/">Rust</a> programming language.</p>
+<p>The syntax is specified using <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form">Extended Backus-Naur Form
+(EBNF)</a>:</p>
+<pre><code>|   alternation
+()  grouping
+[]  option (zero or one time)
+{}  repetition (any number of times)
+</code></pre>
+<h2><a class="header" href="#lexical-elements" id="lexical-elements">Lexical elements</a></h2>
+<pre><code>LETTER = &quot;A&quot; … &quot;Z&quot; | &quot;a&quot; ... &quot;z&quot;
+DIGIT_DEC = &quot;0&quot; … &quot;9&quot;
+DIGIT_HEX = DIGIT_DEC | &quot;A&quot; … &quot;F&quot; | &quot;a&quot; … &quot;f&quot;
+</code></pre>
+<h2><a class="header" href="#identifier" id="identifier">Identifier</a></h2>
+<p>Identifiers must start with a letter. Subsequent characters may also
+include digits and the underscore <code>&quot;_&quot;</code> character.</p>
+<pre><code>identifier = LETTER { LETTER | DIGIT_DEC | &quot;_&quot; }
+</code></pre>
+<h2><a class="header" href="#values" id="values">Values</a></h2>
+<h3><a class="header" href="#boolean" id="boolean">Boolean</a></h3>
+<p>Booleans are either <code>true</code> or <code>false</code>.</p>
+<pre><code>boolean = &quot;true&quot; | &quot;false&quot;
+</code></pre>
+<h3><a class="header" href="#integer" id="integer">Integer</a></h3>
+<p>Integers support both decimal and hexadecimal format.</p>
+<pre><code>integer_dec = [ &quot;+&quot; | &quot;-&quot; ] DIGIT_DEC { DIGIT_DEC }
+integer_hex = [ &quot;+&quot; | &quot;-&quot; ] &quot;0&quot; (&quot;X&quot; | &quot;x&quot;) DIGIT_HEX { DIGIT_HEX }
+integer = integer_dec | integer_hex
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>57005</code></li>
+<li><code>+3</code></li>
+<li><code>-5</code></li>
+<li><code>0x539</code></li>
+<li><code>+0xFF</code></li>
+<li><code>-0x7FFF</code></li>
+</ul>
+<h3><a class="header" href="#float" id="float">Float</a></h3>
+<p>Floats must contain at least one digit before and after the decimal separator.</p>
+<pre><code>float = [ &quot;+&quot; | &quot;-&quot; ] DIGIT_DEC { DIGIT_DEC } &quot;.&quot; DIGIT_DEC { DIGIT_DEC }
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>2.56</code></li>
+<li><code>+5.3338</code></li>
+<li><code>-0.5</code></li>
+</ul>
+<h3><a class="header" href="#string" id="string">String</a></h3>
+<p>Strings are quoted using double quotes <code>'&quot;'</code> and the backspace character <code>&quot;\&quot;</code>
+is used to escape special characters.</p>
+<p>Supported escapes are:</p>
+<ul>
+<li><code>\\</code> → backspace <code>&quot;\&quot;</code></li>
+<li><code>\&quot;</code> → double quote <code>'&quot;'</code></li>
+<li><code>\n</code> → newline (linefeed)</li>
+</ul>
+<pre><code>string = '&quot;' { char_escape | /[^\\]/ } '&quot;'
+char_escape = &quot;\&quot; ( &quot;\&quot; | '&quot;' | &quot;n&quot; )
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>&quot;master&quot;</code></li>
+<li><code>&quot;line1\nline2\nline3&quot;</code></li>
+<li><code>&quot;backslash: \\&quot;</code></li>
+</ul>
+<h3><a class="header" href="#range" id="range">Range</a></h3>
+<p>Ranges have an upper and lower bound which are separated via <code>&quot;..&quot;</code></p>
+<pre><code>range = integer &quot;..&quot; integer
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>0..255</code></li>
+<li><code>0..0xFF</code></li>
+<li><code>1..</code></li>
+<li><code>..50</code></li>
+</ul>
+<h2><a class="header" href="#types" id="types">Types</a></h2>
+<p>Types can either be named or used as part of an array type or map type. The
+named form also supports passing generic parameters.</p>
+<pre><code>type = (type_named | type_array | type_map) [ type_options ]
+type_named = identifier [&quot;&lt;&quot; type { &quot;,&quot; type } &quot;&gt;&quot;]
+type_array = &quot;[&quot; type &quot;]&quot;
+type_map = &quot;{&quot; type &quot;:&quot; type &quot;}&quot;
+type_options = &quot;(&quot; [ type_option { &quot;,&quot; type_option } [ &quot;,&quot; ] ] &quot;)&quot;
+type_option = identifier &quot;=&quot; value
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>FooBar</code></li>
+<li><code>PaginatedResponse&lt;Bar&gt;</code></li>
+<li><code>[ Integer ]</code></li>
+<li><code>[ Integer ] (length=1..16)</code></li>
+<li><code>{ Integer: String }</code></li>
+<li><code>String (length=0..50)</code></li>
+<li><code>Integer (range=-0x80..0x7F)</code></li>
+</ul>
+<h3><a class="header" href="#builtin-types" id="builtin-types">Builtin types</a></h3>
+<p>Builtin types are reserved type names and can not be used as names for your
+own types. It is however possible to use them as identifiers though this
+SHOULD NOT be done on a regular basis.</p>
+<p>Builtin types are:</p>
+<ul>
+<li><code>Boolean</code></li>
+<li><code>Integer</code></li>
+<li><code>Float</code></li>
+<li><code>String</code></li>
+<li><code>Date</code></li>
+<li><code>Time</code></li>
+<li><code>DateTime</code></li>
+<li><code>UUID</code></li>
+<li><code>None</code></li>
+<li><code>Nullable&lt;T&gt;</code></li>
+<li><code>Result&lt;T, E&gt;</code></li>
+</ul>
+<p><code>None</code> is a special type that does only have one valid value which
+is <code>None</code>. This is useful for methods that don't have input or output
+types and when working with optional generics. <code>None</code> should not be
+used on its own for field types as it has no meaning there.</p>
+<p><code>Nullable</code> is a special type which wraps another type internally.
+It is similar to <code>enum Nullable&lt;T&gt; { Some(T), Null }</code> except that it
+maps to <code>null</code> or a similar values in programming languages that
+support this concept. It is typically used in APIs to clear values.
+This must not be confused with
+<a href="#Optional_fields_and_nullable_types">optional fields</a> of structures.</p>
+<p><code>Result</code> is a special type which is an enum that can either be <code>Ok(T)</code>
+or <code>Err(E)</code>. It is similar to <code>enum Result&lt;T, E&gt; { Ok(T), Err(E) }</code>
+except that it maps directly to the builtin <code>Result</code> type if supported
+by the target programming language.</p>
+<h2><a class="header" href="#generics" id="generics">Generics</a></h2>
+<p>Structures, Enumerations and some builtin types support generics.</p>
+<pre><code>generics = &quot;&lt;&quot; identifier { &quot;,&quot; identifier } &quot;&gt;&quot;
+</code></pre>
+<h2><a class="header" href="#struct" id="struct">Struct</a></h2>
+<p>Structures are a collection of fields of storing complex data
+structures.</p>
+<pre><code>struct = &quot;struct&quot; identifier [ generics ] &quot;{&quot; [ struct_fields ] &quot;}&quot;
+struct_fields = struct_field &quot;,&quot; struct_field
+struct_field = identifier [ &quot;?&quot; ] &quot;:&quot; type
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li>
+<pre><code>struct Pet {
+    name: String,
+    age?: Integer
+}
+</code></pre>
+</li>
+<li>
+<pre><code>struct Complex {
+    r: Float,
+    i: Float
+}
+</code></pre>
+</li>
+<li>
+<pre><code>struct Person {
+    first_name: String (length=1..50)
+}`
+</code></pre>
+</li>
+<li>
+<pre><code>struct PaginatedResponse&lt;T&gt; {
+    results: T,
+    page: Integer(range=0..),
+    count: Integer(range=0..),
+}
+</code></pre>
+</li>
+</ul>
+<h3><a class="header" href="#optional-fields-and-nullable-types" id="optional-fields-and-nullable-types">Optional fields and nullable types</a></h3>
+<p>By appending a <code>?</code> to the field identifier a field is marked as
+optional. Optional means that the field can be absent from the structure.</p>
+<p>There also exists the special <code>Nullable&lt;T&gt;</code> type which is used for
+something completely different. While optional means that the field
+can be missing from the serialized structure <code>Nullable&lt;T&gt;</code> means that
+instead of <code>T</code> a special <code>Null</code> value can be transferred instead.
+It is perfectly valid to use  optional and nullable at the same time:</p>
+<pre><code>struct UpdateProfile {
+    name?: String,
+    age?: Nullable&lt;Integer&gt;,
+}
+</code></pre>
+<p>Both <code>name</code> and <code>age</code> are optional in this example. Since Strings do
+have a special empty value (the empty string: &quot;&quot;) it does not need
+to be <code>Nullable</code>. Integers on the other hand do not have such thing
+so <code>Nullable&lt;Integer&gt;</code> would make it possilbe to clear the age of a
+user profile. A JSON serialized structure containing an empty string
+for the <code>name</code> and <code>Null</code> for the <code>age</code> would look like this:</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;&quot;,
+    &quot;age&quot;: null,
+}
+</code></pre>
+<p>Some programming languages and serialization formats support this quite
+naturaly. JavaScript and JSON differenciate between <code>undefined</code> and <code>null</code>
+for object attributes. For languages that don't support this out of the
+box optional fields and nullable types are put in a special wrapper.</p>
+<h2><a class="header" href="#fieldset" id="fieldset">Fieldset</a></h2>
+<p>Fieldset is a special kind of structure that does not define
+its own fields but uses an existing structure and creates a subset
+of it. This feature is mainly for keeping the repetition for
+typical CRUD APIs as little as possible.</p>
+<pre><code>fieldset = &quot;fieldset&quot; identifier &quot;for&quot; identifier &quot;{&quot; struct_fields &quot;}&quot;
+fieldset_fields = [ fieldset_field { &quot;,&quot; fieldset_field } [ &quot;,&quot; ] ]
+fieldset_field = identifier [ &quot;?&quot; ]
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li>
+<pre><code>fieldset PersonUpdate for Person {
+    id,
+    first_name?,
+    last_name?
+}
+</code></pre>
+</li>
+</ul>
+<h2><a class="header" href="#enumerations" id="enumerations">Enumerations</a></h2>
+<p>Enumerations in <code>webwire</code> fulfill two things. They can either be
+used as plain enumerations like in most programming languages. An
+optional type argument makes it possible to describe tagged unions.</p>
+<p>This is especially handly for returning errors which might contain
+data which depends on the actual error code.</p>
+<p>Enumerations can also extend existing enumerations.</p>
+<pre><code>enum = &quot;enum&quot; identifier [ generics ] [ enum_extends ] &quot;{&quot; enum_variants &quot;}&quot;
+enum_extends = &quot;extends&quot; identifier [ generics ]
+enum_variants = [ enum_variant { &quot;,&quot; enum_variant } [ &quot;,&quot; ] ]
+enum_variant = identifier [ &quot;(&quot; type &quot;)&quot; ]
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li>
+<pre><code>enum Status {
+    Enabled,
+    Disabled,
+    Error
+}
+</code></pre>
+</li>
+<li>
+<pre><code>enum AuthError {
+    Unauthenticated,
+    PermissionDenied
+}
+</code></pre>
+</li>
+<li>
+<pre><code>enum GetError extends AuthError {
+    DoesNotExist
+}
+</code></pre>
+</li>
+<li>
+<pre><code>enum Notification {
+    UserJoined(User),
+    UserLeft(User),
+    Message(ChatMessage),
+}
+</code></pre>
+</li>
+</ul>
+<h2><a class="header" href="#namespace" id="namespace">Namespace</a></h2>
+<p>TODO</p>
+<pre><code>namespace = &quot;namespace&quot; identifier &quot;{&quot; namespace_parts &quot;}&quot;
+namespace_parts = { namespace_part }
+namespace_part = struct | fieldset | enum | namespace | service
+</code></pre>
+<h2><a class="header" href="#service" id="service">Service</a></h2>
+<p>TODO</p>
+<pre><code>service = [&quot;async&quot; | &quot;sync&quot;] &quot;service&quot; identifier &quot;{&quot; methods &quot;}&quot;
+methods = [ method { &quot;,&quot; method } [ &quot;,&quot; ] ]
+method = identifier &quot;:&quot; ( type | &quot;None&quot; ) &quot;-&gt;&quot; ( type | &quot;None&quot; )
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="codegen.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="protocol.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="codegen.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="protocol.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Protocol - Webwire</title>
+        <title>HTTP - Webwire</title>
         
         
 
@@ -17,23 +17,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
         
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -43,7 +43,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol.html" class="active"><strong aria-hidden="true">5.2.</strong> Protocol</a></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="../example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="../codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="../idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="../protocol/index.html"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="../protocol/http.html" class="active"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -124,7 +124,7 @@
                     <h1 class="menu-title">Webwire</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
@@ -155,15 +155,65 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#protocol" id="protocol">Protocol</a></h1>
-<h2><a class="header" href="#todo" id="todo">TODO</a></h2>
+                        <h1><a class="header" href="#http" id="http">HTTP</a></h1>
+<h2><a class="header" href="#path" id="path">Path</a></h2>
+<p>Requests and notifications are sent relative to a given <code>base_url</code> with
+the fully qualified method name appended:</p>
+<p>Example:</p>
+<pre><code>base_url: /ww
+fqmn: Example.hello
+
+path: /ww/Example.hello
+</code></pre>
+<h2><a class="header" href="#headers" id="headers">Headers</a></h2>
+<p>The following headers are respected by webwire:</p>
+<table><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody>
+<tr><td>X-Webwire</td><td>This must be either <code>Notification</code> or <code>Request</code></td></tr>
+</tbody></table>
+<h2><a class="header" href="#notification" id="notification">Notification</a></h2>
+<p>The server is expected to answer with <code>204 OK</code> or <code>400 Bad Request</code>.
+In case of an internal server error the status code <code>500 Internal Server Error</code> is identical to a 400 Request with the <code>InternalError</code>
+payload.</p>
+<p>HTTP request:</p>
+<pre><code>POST /ww/example HTTP/1.1
+Host: example-api.webwire.dev
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X-Webwire: Notification
+
+&quot;world&quot;
+</code></pre>
+<p>HTTP response - Ok:</p>
+<pre><code>HTTP/1.1 204
+</code></pre>
+<p>HTTP response - Error:</p>
+<pre><code>HTTP/1.1 400
+
+&quot;MethodNotFound&quot;
+</code></pre>
+<h2><a class="header" href="#request" id="request">Request</a></h2>
+<p>The server is expected to answer with <code>200 OK</code> or <code>400 Bad Request</code>.</p>
+<p>HTTP request:</p>
+<pre><code>POST /ww/Example.get_version? HTTP/1.1
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X-Webwire: Request
+</code></pre>
+<p>HTTP response - Ok:</p>
+<pre><code>HTTP/1.1 200 OK
+
+&quot;1.12.3&quot;
+</code></pre>
+<p>HTTP response - Error:</p>
+<pre><code>HTTP/1.1 400
+
+&quot;ValidationError&quot;
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="idl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../protocol/websocket.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
@@ -177,7 +227,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="idl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../protocol/websocket.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
@@ -202,14 +252,14 @@
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         

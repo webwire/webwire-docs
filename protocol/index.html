@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Example - Webwire</title>
+        <title>Transport Protocol - Webwire</title>
         
         
 
@@ -17,23 +17,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
         
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -43,7 +43,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="example.html" class="active"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol/index.html"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="protocol/http.html"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="../example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="../codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="../idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="../protocol/index.html" class="active"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="../protocol/http.html"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -124,7 +124,7 @@
                     <h1 class="menu-title">Webwire</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
@@ -155,75 +155,60 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#example" id="example">Example</a></h2>
-<p>The following example assumes a Rust server and a TypeScript client. Webwire
-is by no means limited to those two but those languages show the potential of
-webwire best.</p>
-<p>Given the following IDL file:</p>
-<pre><code class="language-webwire">webwire 1.0;
-
-struct HelloRequest {
-    name: String,
-}
-
-struct HelloResponse {
-    message: String,
-}
-
-service Hello {
-    hello: HelloRequest -&gt; HelloResponse
-}
-</code></pre>
-<p>The server and client files can be generated using the code generator:</p>
-<pre><code class="language-shell">$ webwire generate rust server api/hello.ww server/src/api.rs
-$ webwire generate ts client api/hello.ww client/src/api.ts
-</code></pre>
-<p>A Rust server implementation for the given code would look like this:</p>
-<pre><pre class="playground"><code class="language-rust">use std::net::SocketAddr;
-use webwire::{Context, Request, Response}
-use webwire::hyper::Server;
-
-mod api;
-use api::v1::{Hello, HelloRequest, HelloResponse}; // this is the generated code
-
-struct HelloService {}
-
-impl Hello for HelloService {
-    fn hello(&amp;self, ctx: &amp;Context, request: &amp;HelloRequest) -&gt; HelloResponse {
-        HelloResponse {
-            message: format!(&quot;Hello {}!&quot;, request.name)
-        }
-    }
-}
-
-#[tokio::main]
-async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt; {
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
-    let service = HelloService {};
-    let server = webwire::Server::bind(addr).serve(service);
-    server.await
-}
-</code></pre></pre>
-<p>A TypeScript client using the generated code would look like that:</p>
-<pre><code class="language-js">import { Client } from 'api/v1' // this is the generated code
-
-client = new Client('http://localhost:8000/')
-const response = await client.hello({ name: 'World' })
-assert(response.message === 'Hello World!')
-</code></pre>
+                        <h1><a class="header" href="#transport-protocol" id="transport-protocol">Transport Protocol</a></h1>
+<p>The webwire transport protocol exists in two variants.</p>
+<ol>
+<li>Stateless unidirectional (e.g. HTTP)</li>
+<li>Stateful bidirectional (e.g. WebSocket connections)</li>
+</ol>
+<p>Both variants share some common terms and definitions which are
+explained on this page.</p>
+<h2><a class="header" href="#framing" id="framing">Framing</a></h2>
+<p>It is assumed that all protocols being used to transfer webwire messages
+already implement framing. Thus the webwire protocol does not encode its
+own frame length but leaves that to the underlying protocol.</p>
+<p>If the underlying protocol does not implement framing a framing layer
+must be implemented first. This is to be defined in the transport layer
+specific documentation.</p>
+<h2><a class="header" href="#fully-qualified-method-names-fqmn" id="fully-qualified-method-names-fqmn">Fully qualified method names (FQMN)</a></h2>
+<p>Fully qualified method names are dot (<code>.</code>) separated identifiers. All
+identifiers must be ASCII only, start with a letter followed by any number
+of alphanumeric characters. The last two parts are called the service name
+and the method name. Any leading part is called the namespace.</p>
+<p>Examples:</p>
+<table><thead><tr><th>FQMN</th><th>Namespace</th><th>Service</th><th>Method</th></tr></thead><tbody>
+<tr><td><code>Example.hello</code></td><td>-</td><td>Example</td><td>hello</td></tr>
+<tr><td><code>foo.Example.hello</code></td><td>foo</td><td>Example</td><td>hello</td></tr>
+<tr><td><code>foo.bar.Example.hello</code></td><td>foo.bar</td><td>Example</td><td>hello</td></tr>
+</tbody></table>
+<p>Invalid examples:</p>
+<table><thead><tr><th>FQMN</th><th>Why is it invalid?</th></tr></thead><tbody>
+<tr><td><code>hello</code></td><td>Only one part. Service and method name are mandatory</td></tr>
+<tr><td><code>hey.123test</code></td><td>The method name must not start with a number</td></tr>
+<tr><td><code>123hey.test</code></td><td>The service name must not start with a number</td></tr>
+<tr><td><code>123ns.hey.test</code></td><td>The namespace must not start with a number</td></tr>
+<tr><td><code>Über.awesome</code></td><td>Non ASCII character</td></tr>
+</tbody></table>
+<h2><a class="header" href="#error-codes" id="error-codes">Error codes</a></h2>
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody>
+<tr><td>ServiceNotFound</td><td>The requested service does not exist.</td></tr>
+<tr><td>MethodNotFound</td><td>The requested method does not exist.</td></tr>
+<tr><td>ValidationError</td><td>The data could not be deserialized and validated.</td></tr>
+<tr><td>InternalError</td><td>Something bad happened while processing the request.</td></tr>
+</tbody></table>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../idl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="codegen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../protocol/websocket.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -235,13 +220,13 @@ assert(response.message === 'Hello World!')
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../idl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="codegen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../protocol/websocket.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -264,14 +249,14 @@ assert(response.message === 'Hello World!')
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         

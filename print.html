@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol.html"><strong aria-hidden="true">5.2.</strong> Protocol</a></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol/index.html"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="protocol/http.html"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><strong aria-hidden="true">6.1.</strong> Rust</li><li class="chapter-item expanded "><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -575,8 +575,223 @@ namespace_part = struct | fieldset | enum | namespace | service
 methods = [ method { &quot;,&quot; method } [ &quot;,&quot; ] ]
 method = identifier &quot;:&quot; ( type | &quot;None&quot; ) &quot;-&gt;&quot; ( type | &quot;None&quot; )
 </code></pre>
-<h1><a class="header" href="#protocol" id="protocol">Protocol</a></h1>
-<h2><a class="header" href="#todo-1" id="todo-1">TODO</a></h2>
+<h1><a class="header" href="#transport-protocol" id="transport-protocol">Transport Protocol</a></h1>
+<p>The webwire transport protocol exists in two variants.</p>
+<ol>
+<li>Stateless unidirectional (e.g. HTTP)</li>
+<li>Stateful bidirectional (e.g. WebSocket connections)</li>
+</ol>
+<p>Both variants share some common terms and definitions which are
+explained on this page.</p>
+<h2><a class="header" href="#framing" id="framing">Framing</a></h2>
+<p>It is assumed that all protocols being used to transfer webwire messages
+already implement framing. Thus the webwire protocol does not encode its
+own frame length but leaves that to the underlying protocol.</p>
+<p>If the underlying protocol does not implement framing a framing layer
+must be implemented first. This is to be defined in the transport layer
+specific documentation.</p>
+<h2><a class="header" href="#fully-qualified-method-names-fqmn" id="fully-qualified-method-names-fqmn">Fully qualified method names (FQMN)</a></h2>
+<p>Fully qualified method names are dot (<code>.</code>) separated identifiers. All
+identifiers must be ASCII only, start with a letter followed by any number
+of alphanumeric characters. The last two parts are called the service name
+and the method name. Any leading part is called the namespace.</p>
+<p>Examples:</p>
+<table><thead><tr><th>FQMN</th><th>Namespace</th><th>Service</th><th>Method</th></tr></thead><tbody>
+<tr><td><code>Example.hello</code></td><td>-</td><td>Example</td><td>hello</td></tr>
+<tr><td><code>foo.Example.hello</code></td><td>foo</td><td>Example</td><td>hello</td></tr>
+<tr><td><code>foo.bar.Example.hello</code></td><td>foo.bar</td><td>Example</td><td>hello</td></tr>
+</tbody></table>
+<p>Invalid examples:</p>
+<table><thead><tr><th>FQMN</th><th>Why is it invalid?</th></tr></thead><tbody>
+<tr><td><code>hello</code></td><td>Only one part. Service and method name are mandatory</td></tr>
+<tr><td><code>hey.123test</code></td><td>The method name must not start with a number</td></tr>
+<tr><td><code>123hey.test</code></td><td>The service name must not start with a number</td></tr>
+<tr><td><code>123ns.hey.test</code></td><td>The namespace must not start with a number</td></tr>
+<tr><td><code>Über.awesome</code></td><td>Non ASCII character</td></tr>
+</tbody></table>
+<h2><a class="header" href="#error-codes" id="error-codes">Error codes</a></h2>
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody>
+<tr><td>ServiceNotFound</td><td>The requested service does not exist.</td></tr>
+<tr><td>MethodNotFound</td><td>The requested method does not exist.</td></tr>
+<tr><td>ValidationError</td><td>The data could not be deserialized and validated.</td></tr>
+<tr><td>InternalError</td><td>Something bad happened while processing the request.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#websocket-protocol" id="websocket-protocol">Websocket protocol</a></h1>
+<p>All messages are encoded as a space separated list. The first part of a
+message is always a numeric message type followed by message specific fields.</p>
+<h2><a class="header" href="#message-id" id="message-id">Message id</a></h2>
+<p>Most messages require a <code>message_id</code> to be sent. Both server and client
+must implement it as a counter without gaps starting at 1. It is used to
+match match request and response messages together and provide
+reliable messaging even in case of a unexpected connection timeout.</p>
+<h2><a class="header" href="#message-types" id="message-types">Message types</a></h2>
+<p>The following message types are supported:</p>
+<table><thead><tr><th>Code</th><th>Message type</th></tr></thead><tbody>
+<tr><td>0</td><td>Heartbeat</td></tr>
+<tr><td>1</td><td>Notification</td></tr>
+<tr><td>2</td><td>Request</td></tr>
+<tr><td>3</td><td>Response</td></tr>
+<tr><td>4</td><td>Error response</td></tr>
+<tr><td>-1</td><td>Disconnect</td></tr>
+</tbody></table>
+<h3><a class="header" href="#heartbeat" id="heartbeat">Heartbeat</a></h3>
+<p>The heartbeat is used by the client and server to acknowledge messages
+and keep the connection alive if there has been no traffic for a given
+amount of time. For transports that do not keep the connection open for
+an unlimited amount of time this is used for polling.</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>0</code></td></tr>
+<tr><td><code>last_message_id</code></td><td>Integer</td><td>The last message id of the remote side that has been received.</td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>0 42
+</code></pre>
+<h3><a class="header" href="#notification" id="notification">Notification</a></h3>
+<p>Send a notification to the remote side and do not expect a response. This
+message type is especially useful to implement broadcasts from the server
+to the client where no response is expected. Implementations of webwire
+MUST NOT expect a response to a notification.</p>
+<p>Fields:</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>1</code></td></tr>
+<tr><td><code>message_id</code></td><td>Integer</td><td>The <code>id</code> of the message.</td></tr>
+<tr><td><code>method</code></td><td>FQMN</td><td>The fully qualified method name of the method to be called.</td></tr>
+<tr><td><code>data</code></td><td>Binary</td><td>The data field captures the rest of the frame and is treated as binary.</td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>1 43 example.hello peter
+</code></pre>
+<h3><a class="header" href="#request" id="request">Request</a></h3>
+<p>Send a request to the remote side and expect a response.</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>2</code></td></tr>
+<tr><td><code>message_id</code></td><td>Integer</td><td>The <code>id</code> of the message.</td></tr>
+<tr><td><code>method</code></td><td>FQMN</td><td>The fully qualified method name of the method to be called.</td></tr>
+<tr><td><code>data</code></td><td>Binary</td><td>The data field captures the rest of the frame and is treated as binary.</td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>2 44 example.get_version
+</code></pre>
+<h3><a class="header" href="#response" id="response">Response</a></h3>
+<p>This message is sent in response to a request if the remote method could be called
+successfully.</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>3</code></td></tr>
+<tr><td><code>message_id</code></td><td>Integer</td><td>The <code>id</code> of the message.</td></tr>
+<tr><td><code>request_message_id</code></td><td>Integer</td><td>The <code>id</code> of the message that started the request.</td></tr>
+<tr><td><code>data</code></td><td>Binary</td><td>The data field captures the rest of the frame and is treated as binary.</td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>3 7 44 &quot;1.4.9&quot;
+</code></pre>
+<h3><a class="header" href="#error-response" id="error-response">Error response</a></h3>
+<p>This message is sent in response to a request if the remote side encountered
+an error while processing the request. Please note that this message type
+MUST NOT be used to encode application level errors. This is only meant to be
+used for errors which are outside of the application scope. e.g. parser errors,
+data validation, internal server errors, etc.</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>4</code></td></tr>
+<tr><td><code>message_id</code></td><td>Integer</td><td>The <code>id</code> of the message.</td></tr>
+<tr><td><code>request_message_id</code></td><td>Integer</td><td>The <code>id</code> of the message that started the request.</td></tr>
+<tr><td><code>error_code</code></td><td>Binary</td><td>The data field captures the rest of the frame and is treated as binary.</td></tr>
+<tr><td><code>error_message</code></td><td>String</td><td>Optional error message.</td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>4 7 44 MethodNotFound
+</code></pre>
+<h3><a class="header" href="#disconnect" id="disconnect">Disconnect</a></h3>
+<p>Terminate the current connection. The remote side should respond with a <code>-1</code>
+and close the connection.</p>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message_type</code></td><td>Integer</td><td>Constant <code>-1</code></td></tr>
+</tbody></table>
+<p>Example:</p>
+<pre><code>-1
+</code></pre>
+<h2><a class="header" href="#example-communication" id="example-communication">Example communication</a></h2>
+<p>Assuming the connection has been up for a while and the server has now
+reached message id 117. The client has sent 5 messages so far and the
+next message id is 5.</p>
+<ol>
+<li>
+<p>Heartbeat (client to server):</p>
+<pre><code>0 117
+</code></pre>
+</li>
+<li>
+<p>Heartbeat (server to client):</p>
+<pre><code>0 4
+</code></pre>
+</li>
+<li>
+<p>Notification (client to server):</p>
+<pre><code>1 5 Player.ready true
+</code></pre>
+</li>
+<li>
+<p>Request (client to server):</p>
+<pre><code>2 6 get_time
+</code></pre>
+</li>
+<li>
+<p>Response (server to client):</p>
+<pre><code>3 118 6 1342106240
+</code></pre>
+</li>
+</ol>
+<h1><a class="header" href="#http" id="http">HTTP</a></h1>
+<h2><a class="header" href="#path" id="path">Path</a></h2>
+<p>Requests and notifications are sent relative to a given <code>base_url</code> with
+the fully qualified method name appended:</p>
+<p>Example:</p>
+<pre><code>base_url: /ww
+fqmn: Example.hello
+
+path: /ww/Example.hello
+</code></pre>
+<h2><a class="header" href="#headers" id="headers">Headers</a></h2>
+<p>The following headers are respected by webwire:</p>
+<table><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody>
+<tr><td>X-Webwire</td><td>This must be either <code>Notification</code> or <code>Request</code></td></tr>
+</tbody></table>
+<h2><a class="header" href="#notification-1" id="notification-1">Notification</a></h2>
+<p>The server is expected to answer with <code>204 OK</code> or <code>400 Bad Request</code>.
+In case of an internal server error the status code <code>500 Internal Server Error</code> is identical to a 400 Request with the <code>InternalError</code>
+payload.</p>
+<p>HTTP request:</p>
+<pre><code>POST /ww/example HTTP/1.1
+Host: example-api.webwire.dev
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X-Webwire: Notification
+
+&quot;world&quot;
+</code></pre>
+<p>HTTP response - Ok:</p>
+<pre><code>HTTP/1.1 204
+</code></pre>
+<p>HTTP response - Error:</p>
+<pre><code>HTTP/1.1 400
+
+&quot;MethodNotFound&quot;
+</code></pre>
+<h2><a class="header" href="#request-1" id="request-1">Request</a></h2>
+<p>The server is expected to answer with <code>200 OK</code> or <code>400 Bad Request</code>.</p>
+<p>HTTP request:</p>
+<pre><code>POST /ww/Example.get_version? HTTP/1.1
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X-Webwire: Request
+</code></pre>
+<p>HTTP response - Ok:</p>
+<pre><code>HTTP/1.1 200 OK
+
+&quot;1.12.3&quot;
+</code></pre>
+<p>HTTP response - Error:</p>
+<pre><code>HTTP/1.1 400
+
+&quot;ValidationError&quot;
+</code></pre>
 
                     </main>
 

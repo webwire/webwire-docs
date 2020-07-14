@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Webwire overview - Webwire</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html" class="active"><strong aria-hidden="true">1.</strong> Webwire overview</a></li><li class="chapter-item expanded "><a href="idl.html"><strong aria-hidden="true">2.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="protocol.html"><strong aria-hidden="true">3.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Webwire</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#webwire" id="webwire">webwire</a></h1>
+<p><img src="docs/logo.svg" alt="webwire logo" /></p>
+<p><a href="https://discord.gg/jjD6aWG"><img src="https://img.shields.io/discord/726922033039933472?label=Discord+Chat&amp;color=%23677bc4&amp;logo=discord&amp;logoColor=white&amp;style=for-the-badge" alt="Discord Chat" /></a></p>
+<p>Webwire is a <strong>contract-first API</strong> system which features an
+<a href="/idl.html">interface description language</a>,
+a network <a href="/protocol.html">protocol</a> and
+<a href="/codegen.html">code generator</a> for both servers and clients.</p>
+<h2><a class="header" href="#resources" id="resources">Resources</a></h2>
+<ul>
+<li><strong>Website:</strong> https://webwire.dev/</li>
+<li><strong>GitHub:</strong> https://github.com/webwire/</li>
+<li><strong>Discord:</strong> https://discord.gg/jjD6aWG</li>
+</ul>
+<h2><a class="header" href="#work-in-progress" id="work-in-progress">WORK IN PROGRESS</a></h2>
+<blockquote>
+<p><strong>Webwire is not ready to use! All the documentation and code in this
+repository is either incomplete or non functional. Don't expect anything
+to work, yet. Right now this repository is just a collection of ideas and
+preliminary implementations.</strong></p>
+</blockquote>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<p>The following example assumes a Rust server and a TypeScript client. Webwire
+is by no means limited to those two but those languages show the potential of
+webwire best.</p>
+<p>Given the following IDL file:</p>
+<pre><code class="language-webwire">webwire 1.0;
+
+struct HelloRequest {
+    name: String,
+}
+
+struct HelloResponse {
+    message: String,
+}
+
+service Hello {
+    hello: HelloRequest -&gt; HelloResponse
+}
+</code></pre>
+<p>The server and client files can be generated using the code generator:</p>
+<pre><code class="language-bash">$ webwire generate rust server api/hello.ww server/src/api.rs
+$ webwire generate ts client api/hello.ww client/src/api.ts
+</code></pre>
+<p>A Rust server implementation for the given code would look like this:</p>
+<pre><pre class="playground"><code class="language-rust">use std::net::SocketAddr;
+use webwire::{Context, Request, Response}
+use webwire::hyper::Server;
+
+mod api;
+use api::v1::{Hello, HelloRequest, HelloResponse}; // this is the generated code
+
+struct HelloService {}
+
+impl Hello for HelloService {
+    fn hello(&amp;self, ctx: &amp;Context, request: &amp;HelloRequest) -&gt; HelloResponse {
+        HelloResponse {
+            message: format!(&quot;Hello {}!&quot;, request.name)
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt; {
+    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
+    let service = HelloService {};
+    let server = webwire::Server::bind(addr).serve(service);
+    server.await
+}
+</code></pre></pre>
+<p>A TypeScript client using the generated code would look like that:</p>
+<pre><code class="language-typescript">import { Client } from 'api/v1' // this is the generated code
+
+client = new Client('http://localhost:8000/')
+const response = await client.hello({ name: 'World' })
+assert(response.message === 'Hello World!')
+</code></pre>
+<h2><a class="header" href="#building-blocks" id="building-blocks">Building blocks</a></h2>
+<ul>
+<li>
+<p>The <a href="docs/interface_description_language.html">webwire interface description language</a>
+describes service endpoints and how they are called.</p>
+</li>
+<li>
+<p>The <a href="docs/protocol.html">webwire protocol</a> is the actual representation
+how data is transferred between client and server.</p>
+</li>
+<li>
+<p>The <a href="docs/code_generator.html">webwire code generator</a> uses the schema
+language to generate client and server stubs.</p>
+</li>
+</ul>
+<h2><a class="header" href="#unique-selling-points" id="unique-selling-points">Unique selling points</a></h2>
+<ul>
+<li>
+<p>Webwire generates client and server code which is ready to run. The
+generated code contains everything to make requests and</p>
+</li>
+<li>
+<p>Webwire supports both <strong>stateless unidirectional</strong> communication and and
+<strong>stateful bidirectional</strong> communication. This makes it a perfect fit for
+application that require some kind of real-time update from the server
+without the client having to poll for updates.</p>
+</li>
+<li>
+<p>Webwire validates requests and responses. If data does not match the
+given schema an error is raised an the data is not processed any
+further.</p>
+</li>
+<li>
+<p>Webwire is modelled after programming languages and not after a
+serialization format. Therefore types like <code>UUID</code>, <code>Date</code> and <code>Time</code>
+are part of the specification even if the used serialization format
+does not support them. When using a serialization format which does
+not support those types natively (e.g. JSON) they are encoded as
+string. This is transparent to the users of webwire.</p>
+</li>
+<li>
+<p>Webwire has a special type called <code>fieldset</code>. Fieldsets can be used to
+construct a struct out of another struct by picking a subset of fields.
+This is especially useful when designing APIs where multiple endpoints
+use almost the same structure which just differs in a few fields.</p>
+</li>
+</ul>
+<h2><a class="header" href="#non-goals" id="non-goals">Non goals</a></h2>
+<ul>
+<li>Webwire can not be used to describe existing APIs. Webwire only makes
+sense as a whole package. The IDL, protocol and code generator all make
+a complete package and leaving out one or the other just doesn't make
+any sense. If you need to document an existing API have a look at
+<a href="https://swagger.io/docs/specification/about/">OpenAPI</a>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="idl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="idl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

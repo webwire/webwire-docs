@@ -5,3 +5,6 @@ multilingual = false
 src = "src"
 title = "Webwire"
 description = "Webwire is a Contract-First API System which features an interface description language, bidirectional RPC and code generation for servers and clients."
+
+[output.html]
+git-repository-url = "https://github.com/webwire/webwire-docs"

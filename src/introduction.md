@@ -16,13 +16,6 @@ the website at [https://webwire.dev/](https://webwire.dev/).
 - **GitHub:** [https://github.com/webwire/](https://github.com/webwire/)
 - **Discord:** [https://discord.gg/jjD6aWG](https://discord.gg/jjD6aWG)
 
-## WORK IN PROGRESS
-
-> **Webwire is not ready to use! All the documentation and code in this
-repository is either incomplete or non functional. Don't expect anything
-to work, yet. Right now this repository is just a collection of ideas and
-preliminary implementations.**
-
 ## Building blocks
 
 - The [webwire interface description language](/idl.md)

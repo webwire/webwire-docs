@@ -12,8 +12,8 @@
         - [HTTP](./protocol/http.md)
 
 - [Language support]()
-    - [Rust]()
-    - [TypeScript (and JavaScript)]()
+    - [Rust](language/rust.md)
+    - [TypeScript (and JavaScript)](language/typescript.md)
     - [Python]()
     - [Go]()
     - [Dart (and Flutter)]()

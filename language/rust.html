@@ -3,14 +3,14 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Transport Protocol - Webwire</title>
+        <title>Rust - Webwire</title>
         
         
 
 
         <!-- Custom HTML head -->
         <meta property="og:site_name" content="Webwire - Contract-First API System">
-<meta property="og:title" content="Transport Protocol">
+<meta property="og:title" content="Rust">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://webwire.dev/og-image.png">
 <meta property="og:description" content="Webwire is a Contract-First API System which features an interface description language, bidirectional RPC and code generation for servers and clients.">
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="../example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="../codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="../idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="../protocol/index.html" class="active"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="../protocol/http.html"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><a href="../language/rust.html"><strong aria-hidden="true">6.1.</strong> Rust</a></li><li class="chapter-item expanded "><a href="../language/typescript.html"><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</a></li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><strong aria-hidden="true">2.</strong> Getting started</li><li class="chapter-item expanded "><a href="../example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="../codegen.html"><strong aria-hidden="true">4.</strong> Code generator</a></li><li class="chapter-item expanded "><strong aria-hidden="true">5.</strong> Specification</li><li><ol class="section"><li class="chapter-item expanded "><a href="../idl.html"><strong aria-hidden="true">5.1.</strong> Interface Description Language</a></li><li class="chapter-item expanded "><a href="../protocol/index.html"><strong aria-hidden="true">5.2.</strong> Transport Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../protocol/websocket.html"><strong aria-hidden="true">5.2.1.</strong> Websocket</a></li><li class="chapter-item expanded "><a href="../protocol/http.html"><strong aria-hidden="true">5.2.2.</strong> HTTP</a></li></ol></li></ol></li><li class="chapter-item expanded "><strong aria-hidden="true">6.</strong> Language support</li><li><ol class="section"><li class="chapter-item expanded "><a href="../language/rust.html" class="active"><strong aria-hidden="true">6.1.</strong> Rust</a></li><li class="chapter-item expanded "><a href="../language/typescript.html"><strong aria-hidden="true">6.2.</strong> TypeScript (and JavaScript)</a></li><li class="chapter-item expanded "><strong aria-hidden="true">6.3.</strong> Python</li><li class="chapter-item expanded "><strong aria-hidden="true">6.4.</strong> Go</li><li class="chapter-item expanded "><strong aria-hidden="true">6.5.</strong> Dart (and Flutter)</li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,60 +165,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#transport-protocol" id="transport-protocol">Transport Protocol</a></h1>
-<p>The webwire transport protocol exists in two variants.</p>
-<ol>
-<li>Stateless unidirectional (e.g. HTTP)</li>
-<li>Stateful bidirectional (e.g. WebSocket connections)</li>
-</ol>
-<p>Both variants share some common terms and definitions which are
-explained on this page.</p>
-<h2><a class="header" href="#framing" id="framing">Framing</a></h2>
-<p>It is assumed that all protocols being used to transfer webwire messages
-already implement framing. Thus the webwire protocol does not encode its
-own frame length but leaves that to the underlying protocol.</p>
-<p>If the underlying protocol does not implement framing a framing layer
-must be implemented first. This is to be defined in the transport layer
-specific documentation.</p>
-<h2><a class="header" href="#fully-qualified-method-names-fqmn" id="fully-qualified-method-names-fqmn">Fully qualified method names (FQMN)</a></h2>
-<p>Fully qualified method names are dot (<code>.</code>) separated identifiers. All
-identifiers must be ASCII only, start with a letter followed by any number
-of alphanumeric characters. The last two parts are called the service name
-and the method name. Any leading part is called the namespace.</p>
-<p>Examples:</p>
-<table><thead><tr><th>FQMN</th><th>Namespace</th><th>Service</th><th>Method</th></tr></thead><tbody>
-<tr><td><code>Example.hello</code></td><td>-</td><td>Example</td><td>hello</td></tr>
-<tr><td><code>foo.Example.hello</code></td><td>foo</td><td>Example</td><td>hello</td></tr>
-<tr><td><code>foo.bar.Example.hello</code></td><td>foo.bar</td><td>Example</td><td>hello</td></tr>
-</tbody></table>
-<p>Invalid examples:</p>
-<table><thead><tr><th>FQMN</th><th>Why is it invalid?</th></tr></thead><tbody>
-<tr><td><code>hello</code></td><td>Only one part. Service and method name are mandatory</td></tr>
-<tr><td><code>hey.123test</code></td><td>The method name must not start with a number</td></tr>
-<tr><td><code>123hey.test</code></td><td>The service name must not start with a number</td></tr>
-<tr><td><code>123ns.hey.test</code></td><td>The namespace must not start with a number</td></tr>
-<tr><td><code>Über.awesome</code></td><td>Non ASCII character</td></tr>
-</tbody></table>
-<h2><a class="header" href="#error-codes" id="error-codes">Error codes</a></h2>
-<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody>
-<tr><td>ServiceNotFound</td><td>The requested service does not exist.</td></tr>
-<tr><td>MethodNotFound</td><td>The requested method does not exist.</td></tr>
-<tr><td>ValidationError</td><td>The data could not be deserialized and validated.</td></tr>
-<tr><td>InternalError</td><td>Something bad happened while processing the request.</td></tr>
-</tbody></table>
+                        <h1><a class="header" href="#rust" id="rust">Rust</a></h1>
+<blockquote>
+<p><strong>This chapter is work in progress</strong></p>
+</blockquote>
+<h2><a class="header" href="#library" id="library">Library</a></h2>
+<p>The Webwire library for Rust can be found here:</p>
+<ul>
+<li><a href="https://github.com/webwire/webwire-rust">github.com</a></li>
+<li><a href="https://crates.io/crates/webwire">crates.io</a></li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../idl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../protocol/http.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../protocol/websocket.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../language/typescript.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -230,13 +199,13 @@ and the method name. Any leading part is called the namespace.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../idl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../protocol/http.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../protocol/websocket.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../language/typescript.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
